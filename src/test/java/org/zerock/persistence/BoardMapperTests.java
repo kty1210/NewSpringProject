@@ -47,4 +47,13 @@ public class BoardMapperTests {
     log.info(board);
     log.info("after insert selectkey " + board.getBno());
   }
+	
+	@Test
+  public void testRead() {
+	  
+	  //존재하는 게시물 번호인지 확인
+    BoardVO board = mapper.read(5L);
+    
+    log.info(board);
+  }
 }
