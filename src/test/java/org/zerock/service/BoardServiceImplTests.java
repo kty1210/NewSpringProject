@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
 
 import lombok.extern.log4j.Log4j;
+import oracle.net.ano.Service;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -46,5 +47,10 @@ public class BoardServiceImplTests {
   @Test
   public void testGetList() {
     service.getList().forEach(board -> log.info(board));
+  }
+  
+  @Test
+  public void testGet() {
+    log.info(service.get(1L));
   }
 }
