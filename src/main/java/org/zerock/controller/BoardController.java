@@ -21,6 +21,8 @@ public class BoardController {
  private BoardService service;
  
  @GetMapping("/list")
+ //Model은 스프링 프레임워크에서 사용되는 방식
+ //자바에서 List 방식으로 들어가는 값이 할당
  public void list (Model model) {
    
    log.info("list");
