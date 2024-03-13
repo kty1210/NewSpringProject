@@ -56,4 +56,17 @@ public class BoardControllerTests {
         
      log.info(resultPage);
   }
+  
+  
+  @Test
+  public void testGet() throws Exception{
+    
+    log.info(
+        mockMVC.perform(MockMvcRequestBuilders
+        .get("/board/get")
+        .param("bno","5")) //데이터 유무 확인
+        .andReturn()
+        .getModelAndView()
+        .getModelMap());
+  }
 }
