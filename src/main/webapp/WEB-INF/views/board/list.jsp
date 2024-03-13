@@ -38,7 +38,7 @@
                                 		<td><c:out value="${board.title}"/></td>
                                 		<td><c:out value="${board.writer}"/></td>
                                 		<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${board.regdate}"/></td>
+											value="${board.regDate}"/></td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd"
 											value="${board.updateDate}"/></td>
                                 	</tr>
@@ -55,5 +55,6 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            
+    </div>
+    <!-- /#wrapper -->        
 <%@include file = "../includes/footer.jsp" %>
