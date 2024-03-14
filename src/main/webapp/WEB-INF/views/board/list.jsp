@@ -10,6 +10,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board List Page</h1>
+			
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -17,7 +18,10 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Board List Page</div>
+			
+			
+				<div class="panel-heading">Board List Page<button id="regBtn" type="button" class="btn btn-xs pull-right" >Register New Board</button></div>
+				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table width="100%"
@@ -99,6 +103,11 @@
 			
 			$("#myModal").modal("show");
 		}
+	});
+	
+	$("#regBtn").on("click", function(){
+		
+		self.location="/board/register";
 	});
 </script>
 <%@include file="../includes/footer.jsp"%>
