@@ -47,11 +47,11 @@ public class BoardController {
  }
  
  
- @GetMapping("/get")
+ @GetMapping({"/get", "modify"})
  // RequestParam 쿼리 스트링 받아옴
  //?bno=5
  public void get (@RequestParam("bno") Long bno, Model model) {
-   log.info("/get");
+   log.info("/get or modify");
    model.addAttribute("board", service.get(bno));
  }
  

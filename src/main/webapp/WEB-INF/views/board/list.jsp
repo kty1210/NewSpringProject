@@ -93,9 +93,11 @@
 		
 		checkModal(result);
 		
+		history.replaceState({}, null, null)
+		
 		function checkModal(result){
-			if(result === ''){
-				return
+			if(result === '' || history.styate){
+				return;
 			}
 			
 			if(parseInt(result) > 0){
