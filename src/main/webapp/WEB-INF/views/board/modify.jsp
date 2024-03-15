@@ -87,7 +87,7 @@
 				formObj.attr("action", "/board/modify")
 				.attr("method", "post");
 			} 
-			//formObj.submit();
+			formObj.submit();
 		});
 		
 	});
