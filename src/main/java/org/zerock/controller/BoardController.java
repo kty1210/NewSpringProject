@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +45,7 @@ public class BoardController {
    log.info("list :" + cri);
    //addAttribute(a,b) -> b의 값을 a에 입력
    model.addAttribute("list", service.getList(cri));
+   model.addAttribute("pageMaker", new PageDTO(cri, 123));
    
  }
  

@@ -51,6 +51,7 @@
 
 
 					</table>
+						<h3>${pageMaker}</h3>
 					<!-- 모달시작 -->
 					<div id="myModal" class="modal" tabindex="-1" role="dialog">
 						<div class="modal-dialog" role="document">
