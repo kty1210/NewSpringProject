@@ -43,8 +43,13 @@
 						<c:forEach items="${list}" var="board">
 							<tr>
 								<td><c:out value="${board.bno}" /></td>
-								<td><a href="/board/get?bno=<c:out value="${board.bno}"/>">
-										<c:out value="${board.title}" />
+								<td><a class='move' href='<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}" />
+								
+								<%-- <td><a href="/board/get?bno=<c:out value="${board.bno}"/>">
+										<c:out value="${board.title}" /> --%>
+										
+										
 								</a></td>
 								<td><c:out value="${board.writer}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -66,6 +71,7 @@
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
+									<!-- page-item active 원래 이런 포맷 -->
 								<li class="page-item ${pageMaker.cri.pageNum == num ? "active" : ""}">
 								<a class="page-link" href="${num}">${num}</a></li>
 							</c:forEach>
@@ -158,6 +164,14 @@
 		actionForm.find("input[name='pageNum']").val(targetPage);
 		actionForm.submit();
 		
+	});
+	
+	$(".move").on("click", function(e){
+		e.preventDefault();
+		actionForm.append("<input type='hidden' name='bno' value='" +
+				$(this).attr("href")+"'>");
+		actionForm.attr("action","/board/get").submit();
+		/* actionForm.submit(); 줄이기 가능 */ 
 	});
 </script>
 <%@include file="../includes/footer.jsp"%>

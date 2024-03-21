@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +66,9 @@ public class BoardController {
  @GetMapping({"/get", "modify"})
  // RequestParam 쿼리 스트링 받아옴
  //?bno=5
- public void get (@RequestParam("bno") Long bno, Model model) {
+ //ModelAttribute 역할 : cri로 값의 이름을 줄여라
+ public void get (@RequestParam("bno") Long bno, @ModelAttribute("cri")
+ Criteria cri, Model model) {
    log.info("/get or modify");
    model.addAttribute("board", service.get(bno));
  }
