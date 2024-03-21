@@ -66,7 +66,8 @@
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
-								<li class="page-item"><a class="page-link" href="#">${num}</a></li>
+								<li class="page-item ${pageMaker.cri.pageNum == num ? "active" : ""}">
+								<a class="page-link" href="${num}">${num}</a></li>
 							</c:forEach>
 							<c:if test="${pageMaker.next}">
 								<li class="page-item">
@@ -139,6 +140,14 @@
 	$("#regBtn").on("click", function() {
 
 		self.location = "/board/register";
+	});
+	
+	$(".page-link").on("click", function(e){
+		e.preventDefault();
+		
+		var targetPage = $(this).attr("href");
+		
+		console.log(targetPage);
 	});
 </script>
 <%@include file="../includes/footer.jsp"%>
