@@ -59,16 +59,20 @@
 
 					<div class="pull-right">
 						<ul class="pagination">
-							<c:if test=${pagemaker.prev}>
+							<c:if test="${pageMaker.prev}">
 								<li class="page-item">
 									<a class="page-link" href="${pageMaker.startPage-1}" tabindex="-1">Previous</a>
-								
 								</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
 								<li class="page-item"><a class="page-link" href="#">${num}</a></li>
 							</c:forEach>
+							<c:if test="${pageMaker.next}">
+								<li class="page-item">
+									<a class="page-link" href="${pageMaker.startPage+1}" tabindex="-1">Next</a>
+								</li>
+							</c:if>
 						</ul>
 					</div>
 
