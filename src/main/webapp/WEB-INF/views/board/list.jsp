@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board List Page</h1>
-			
+
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -18,10 +18,14 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-			
-			
-				<div class="panel-heading">Board List Page<button id="regBtn" type="button" class="btn btn-xs pull-right" >Register New Board</button></div>
-				
+
+
+				<div class="panel-heading">
+					Board List Page
+					<button id="regBtn" type="button" class="btn btn-xs pull-right">Register
+						New Board</button>
+				</div>
+
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table width="100%"
@@ -40,7 +44,8 @@
 							<tr>
 								<td><c:out value="${board.bno}" /></td>
 								<td><a href="/board/get?bno=<c:out value="${board.bno}"/>">
-								<c:out value="${board.title}" /></a></td>
+										<c:out value="${board.title}" />
+								</a></td>
 								<td><c:out value="${board.writer}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${board.regDate}" /></td>
@@ -51,7 +56,24 @@
 
 
 					</table>
-						<h3>${pageMaker}</h3>
+
+					<div class="pull-right">
+						<ul class="pagination">
+							<c:if test=${pagemaker.prev}>
+								<li class="page-item">
+									<a class="page-link" href="${pageMaker.startPage-1}" tabindex="-1">Previous</a>
+								
+								</li>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPage}"
+									end="${pageMaker.endPage}" var="num">
+								<li class="page-item"><a class="page-link" href="#">${num}</a></li>
+							</c:forEach>
+						</ul>
+					</div>
+
+
+
 					<!-- 모달시작 -->
 					<div id="myModal" class="modal" tabindex="-1" role="dialog">
 						<div class="modal-dialog" role="document">
@@ -87,31 +109,32 @@
 </div>
 <!-- /#wrapper -->
 <script>
-   
-	$(document).ready(function() {
-		
-		let result = "<c:out value='${result}'/>";
-		
-		checkModal(result);
-		
-		history.replaceState({}, null, null)
-		
-		function checkModal(result){
-			if(result === '' || history.styate){
-				return;
-			}
-			
-			if(parseInt(result) > 0){
-				$(".modal-body").html("게시글" + parseInt(result) + " 빈이 등록되었습니다.");
-			}
-			
-			$("#myModal").modal("show");
-		}
-	});
-	
-	$("#regBtn").on("click", function(){
-		
-		self.location="/board/register";
+	$(document).ready(
+			function() {
+
+				let result = "<c:out value='${result}'/>";
+
+				checkModal(result);
+
+				history.replaceState({}, null, null)
+
+				function checkModal(result) {
+					if (result === '' || history.styate) {
+						return;
+					}
+
+					if (parseInt(result) > 0) {
+						$(".modal-body").html(
+								"게시글" + parseInt(result) + " 빈이 등록되었습니다.");
+					}
+
+					$("#myModal").modal("show");
+				}
+			});
+
+	$("#regBtn").on("click", function() {
+
+		self.location = "/board/register";
 	});
 </script>
 <%@include file="../includes/footer.jsp"%>
