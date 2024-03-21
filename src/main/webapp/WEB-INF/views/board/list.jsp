@@ -76,7 +76,11 @@
 							</c:if>
 						</ul>
 					</div>
-
+						
+					<form id='actionForm' action="/board/list" method='get'>
+						<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+						<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					</form>
 
 
 					<!-- 모달시작 -->
@@ -142,12 +146,18 @@
 		self.location = "/board/register";
 	});
 	
+	var actionForm = $("#actionForm");
+	
 	$(".page-link").on("click", function(e){
+		
 		e.preventDefault();
 		
 		var targetPage = $(this).attr("href");
-		
 		console.log(targetPage);
+		
+		actionForm.find("input[name='pageNum']").val(targetPage);
+		actionForm.submit();
+		
 	});
 </script>
 <%@include file="../includes/footer.jsp"%>
