@@ -20,7 +20,7 @@
 				<div class="panel-heading">Board Read Paging</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-
+				
 					<div class="form-group">
 						<label>Bno</label> <input class="form-control" name="bno"
 						value='<c:out value="${board.bno}" />' readonly="readonly">
