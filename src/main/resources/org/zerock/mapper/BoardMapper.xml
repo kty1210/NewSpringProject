@@ -41,23 +41,53 @@
   	updateDate = sysdate
   	where bno = #{bno}  
   </update> 
-  
-  <!-- /*+ INDEX_DESC(tbl_board pk_board) */ 힌트 부분 -->
-  <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
-  	<![CDATA[
-    	select bno, title, content, writer, regDate, updateDate
-    	from(
-	    	select     			
-			    /*+ INDEX_DESC(tbl_board pk_board) */
-			    rownum rn, bno, title, content, writer, regDate, updateDate 
-			    from tbl_board
-	        where rownum <= #{pageNum} * #{amount}
-    	) where rn > (#{pageNum} -1) * #{amount}
-    ]]>
-  </select>
-  
-  <select id="getTotalCount" resultType="int">
-  	select count(*) from tbl_board where bno > 0
-  </select>
+  <sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' ||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' ||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%' ||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+  		<![CDATA[
+  			select  
+  				 bno, title, content, writer, regdate, updatedate
+		 	from(
+	    			select /*+ index_desc(tbl_board pk_board) */
+	    			rownum rn, bno, title, content, writer, regdate, updatedate
+	    			from tbl_board
+	    			where
+		 ]]>
+		
+		 <include refid="criteria"></include>
+		
+  		<![CDATA[
+		     	ROWNUM <= #{pageNum} * #{amount}
+		     	 )
+			where rn > (#{pageNum}-1) * #{amount}
+		 ]]>
+		 </select>
+		
+       <select id="getTotalCount" resultType="int">
+		select count(*) from tbl_board
+		where
+		
+		 <include refid="criteria"></include>
+		
+		 bno > 0
+		</select>  
   
 </mapper>
