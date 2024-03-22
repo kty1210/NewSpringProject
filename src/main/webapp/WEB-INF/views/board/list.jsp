@@ -200,7 +200,8 @@
 	/* 프론트 유효성검사 */
 	var searchForm = $("#searchForm");
 	
-	$("searchForm button").on("click", function(e){
+	searchForm.find("button").on("click", function(e){
+
 		
 		e.preventDefault();
 		
