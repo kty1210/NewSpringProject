@@ -46,7 +46,13 @@ public class BoardController {
    log.info("list :" + cri);
    //addAttribute(a,b) -> b의 값을 a에 입력
    model.addAttribute("list", service.getList(cri));
-   model.addAttribute("pageMaker", new PageDTO(cri, 123));
+   //model.addAttribute("pageMaker", new PageDTO(cri, 123));
+   
+   int total = service.getTotal(cri);
+   
+   log.info("total: " + total);
+   
+   model.addAttribute("pageMaker", new PageDTO(cri, total));
    
  }
  
