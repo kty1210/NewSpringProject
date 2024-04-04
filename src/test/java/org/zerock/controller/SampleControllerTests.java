@@ -52,7 +52,8 @@ public class SampleControllerTests {
     
     mockMvc.perform(post("/sample/ticket")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(jsonStr)
+        .content(jsonStr))
+    // HTTP 응답의 상태 코드가 200(성공)인지를 검증
         .andExpect(status().is(200));
     
     
