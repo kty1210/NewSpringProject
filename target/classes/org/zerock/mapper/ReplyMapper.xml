@@ -13,4 +13,9 @@
 		select * from tbl_reply 
 		where rno = #{rno}
 	</select>
+	
+	<delete id="delete">
+		delete from tbl_reply 
+		where rno = #{rno}
+	</delete>
 </mapper>
