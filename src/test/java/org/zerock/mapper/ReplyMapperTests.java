@@ -41,4 +41,13 @@ public class ReplyMapperTests {
   public void testMapper() {
     log.info(mapper);
   }
+  
+  @Test
+  public void testRead() {
+    Long targetRno = 5L;
+    
+    ReplyVO vo = mapper.read(targetRno);
+    
+    log.info(vo);
+  }
 }

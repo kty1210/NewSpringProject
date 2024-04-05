@@ -9,4 +9,8 @@
 		values (seq_reply.nextval, #{bno}, #{reply}, #{replier})
 	</insert>
 
+	<select id="read" resultType="org.zerock.domain.ReplyVO">
+		select * from tbl_reply 
+		where rno = #{rno}
+	</select>
 </mapper>
