@@ -6,6 +6,18 @@
 
 <%@include file="../includes/header.jsp"%>
 
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<script type ="text/javascript">
+	$(document).ready(function(){
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click", function(e){
+			operForm.attr("action", "/board/modify").submit();
+		});
+	})
+</script>
+
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
