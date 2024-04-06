@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ReplyMapperTests {
 
-  private Long[] bnoArr = {2049L, 2047L, 2046L, 2045L, 2044L};
+  private Long[] bnoArr = {10752L, 10731L, 10710L, 10689L, 10668L};
   
   @Setter 
   @Autowired

@@ -6,18 +6,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<script type="text/javascript" src="/resources/js/reply.js"></script>
-
-<script type ="text/javascript">
-	$(document).ready(function(){
-		var operForm = $("#operForm");
-		
-		$("button[data-oper='modify']").on("click", function(e){
-			operForm.attr("action", "/board/modify").submit();
-		});
-	})
-</script>
-
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
@@ -101,6 +89,37 @@
 	<!-- /.row -->
 </div>
 <!-- /#wrapper -->
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<script>
+	
+	console.log("=============================");
+	console.log("JS TEST");
+	
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	
+	replyService.add(
+	{reply:"JS TEST", replier:"tester", bno:bnoValue},
+	function(result){
+		alert("RESULT: " + result);
+	}
+	);		
+	
+
+</script>
+
+<script type ="text/javascript">
+	$(document).ready(function(){
+		
+		console.log(replyService);
+		
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click", function(e){
+			operForm.attr("action", "/board/modify").submit();
+		});
+	})
+</script>
 
 <script>
 	window.onpageshow = function(event) {
@@ -110,7 +129,5 @@
 		}
 
 	}
-	
-	
 </script>
 <%@include file="../includes/footer.jsp"%>
