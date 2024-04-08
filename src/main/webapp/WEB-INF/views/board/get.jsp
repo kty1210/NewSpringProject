@@ -194,6 +194,8 @@ function showList(page) {
                 });
  }//end of showList
  
+ 
+ 	//댓글 모달창 관련 선언부
 	var modal = $(".modal");
  	var modalInputReply = modal.find("input[name='reply']");
  	var modalInputReplier = modal.find("input[name='replier']");
@@ -203,6 +205,7 @@ function showList(page) {
  	var modalRemoveBtn = $("#modalRemoveBtn");
  	var modalRegisterBtn = $("#modalRegisterBtn");
  	
+ 	//댓글 등록 모달
  	$("#addReplyBtn").on("click", function(e){
  		modal.find("input").val("");
  		modalInputReplyDate.closest("div").hide();
@@ -213,6 +216,7 @@ function showList(page) {
  		$(".modal").modal("show");
  	});
  	
+ 	//댓글 등록 처리
  	modalRegisterBtn.on("click", function(e){
  		var reply = {
  				reply: modalInputReply.val(),
@@ -224,10 +228,13 @@ function showList(page) {
  	
  			modal.find("input").val("");
  			modal.modal("hide");
+ 			
+ 			showList(1);
  		});
- 		
- 		
  	});
+ 	
+ 	
+ 	
  	
 });
 
