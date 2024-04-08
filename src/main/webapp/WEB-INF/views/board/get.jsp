@@ -194,6 +194,7 @@ function showList(page) {
                 });
  }//end of showList
  
+ 	
  
  	//댓글 모달창 관련 선언부
 	var modal = $(".modal");
@@ -204,6 +205,29 @@ function showList(page) {
  	var modalModBtn = $("#modalModBtn");
  	var modalRemoveBtn = $("#modalRemoveBtn");
  	var modalRegisterBtn = $("#modalRegisterBtn");
+ 	
+ 	showList(1);
+ 	//댓글 수정
+ 	modalModBtn.on("click", function(e){
+		var reply = {rno:modal.data("rno"), reply: modalInputReply.val(), replier: modalInputReplier.val()};
+		
+		replyService.update(reply,function(result){
+			alert(result);
+			modal.modal("hide");
+			showList(1);
+		});
+	});
+ 	
+ 	//댓글 삭제
+ 	modalRemoveBtn.on("click", function(e){
+ 		var rno = modal.data("rno");
+		
+ 		replyService.remove(rno, function(result){
+			alert(result);
+			modal.modal("hide");
+			showList(1);
+		});
+	});
  	
  	//댓글 등록 모달
  	$("#addReplyBtn").on("click", function(e){
@@ -250,6 +274,7 @@ function showList(page) {
  			
  			$(".modal").modal("show");
  			
+ 			
  		});
  	});
  	
@@ -281,7 +306,7 @@ function showList(page) {
 		console.log(list[i] + " : " + i );
 		}
 		});
-		
+	
 		
 	
 	
