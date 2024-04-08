@@ -87,24 +87,77 @@
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
+	
+	<!-- 댓글 목록 처리 시작 -->
+<div class='row'>
+   <div class="col-lg-12">
+      <!-- /.panel -->
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <i class="fa fa-comments fa-fw"></i> Reply
+            <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+         </div>
+         <!-- /.panel-heading -->
+         <div class="panel-body">
+            <ul class="chat">
+               <!--  Start reply -->
+               <li class="left clearfix" data-rno='12'>
+                  <div>
+                     <div class="header">
+                        <strong class="primary-font">user00</strong> 
+                        <small class="pull-right text-muted">2022-07-26 10:16</small>
+                     </div>
+                     <p>Good Job!</p>
+                  </div>
+               </li>
+            </ul>
+            <!-- ./ end ul -->
+         </div>
+         <!-- /.panel .chat-panel -->
+         <div class="panel-footer"></div>
+      </div>
+   </div>
+   <!-- ./ end row -->
+</div>
+	
 </div>
 <!-- /#wrapper -->
+
+
+	
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
 <script>
+$(document).ready(function(){
 	
 	console.log("=============================");
 	console.log("JS TEST");
 	
 	var bnoValue = '<c:out value="${board.bno}"/>';
+	var replyUL = $(".chat");
 	
-	replyService.add(
-	{reply:"JS TEST", replier:"tester", bno:bnoValue},
-	function(result){
-		alert("RESULT: " + result);
-	}
-	);		
+	showList(1);
 	
+function showList(page) {
+    replyService.getList(   {bno : bnoValue, page : page || 1 }, function(list) {
+                   var str = " ";
+                   if (list == null  || list.length == 0) {
+                      replyUL.html("");
+                      return;
+                   }
+                   for (var i = 0, len = list.length || 0; i < len; i++) {  
+                      str += "<li class='left clearfix' data-rno= '"+list[i].rno+"'>";
+                      str += " <div>";
+                      str+=  "<div class='header'>";
+                      str+= "<strong class='primary-font'>[" + list[i].rno   + "] " + list[i].replier + "</strong>";
+                      str += "<small class='pull-right text-muted'>" + replyService.displayTime(list[i].replyDate)   + "</small></div>";
+                      str += "    <p>" + list[i].reply + "</p></div></li>";
+                   }
+                   replyUL.html(str);
+                });
+ }
+});
+
 
 </script>
 
@@ -119,15 +172,21 @@
 			operForm.attr("action", "/board/modify").submit();
 		});
 	})
-</script>
-
-<script>
-	window.onpageshow = function(event) {
-		//back 이벤트 일 경우
-		if (event.persisted) {
-			location.reload(true);
-		}
-
+	replyService.add(
+	{reply:"JS TEST", replier:"tester", bno:bnoValue},
+	function(result){
+		alert("RESULT: " + result);
 	}
+	replyService.getList({bno:bnoValue, page:1}, function(list){
+		for(var i=0, len=list.length || 0; i<len; i++){
+		console.log(list[i] + " : " + i );
+		}
+		});
+		}
+	);		
+	
+	
 </script>
+
+
 <%@include file="../includes/footer.jsp"%>
