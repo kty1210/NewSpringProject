@@ -213,6 +213,21 @@ function showList(page) {
  		$(".modal").modal("show");
  	});
  	
+ 	modalRegisterBtn.on("click", function(e){
+ 		var reply = {
+ 				reply: modalInputReply.val(),
+ 				replier: modalInputReplier.val(),
+ 				bno:bnoValue
+ 		};
+ 		replyService.add(reply, function(result){
+ 			alert(result);
+ 	
+ 			modal.find("input").val("");
+ 			modal.modal("hide");
+ 		});
+ 		
+ 		
+ 	});
  	
 });
 
