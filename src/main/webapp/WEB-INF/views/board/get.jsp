@@ -92,6 +92,8 @@
 <div class='row'>
    <div class="col-lg-12">
       <!-- /.panel -->
+      
+      <!-- 새 댓글 추가 -->
       <div class="panel panel-default">
          <div class="panel-heading">
             <i class="fa fa-comments fa-fw"></i> Reply
@@ -124,6 +126,41 @@
 <!-- /#wrapper -->
 
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+         </div>
+         <div class="modal-body">
+            <div class="form-group">
+               <label>Reply</label> <input class="form-control" name='reply'
+                  value='New Reply!!!'>
+            </div>
+            <div class="form-group">
+               <label>Replier</label> <input class="form-control" name='replier'
+                  value='replier'>
+            </div>
+            <div class="form-group">
+               <label>Reply Date</label> <input class="form-control"
+                  name='replyDate' value='2022-07-22'>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" id='modalModBtn' class="btn btn-warning">Modify</button>
+            <button type="button" id='modalRemoveBtn' class="btn btn-danger">Remove</button>
+            <button type="button" id='modalRegisterBtn' class="btn btn-defalut"
+               data-dismiss="modal">Register</button>
+            <button type="button" id='modalCloseBtn' class="btn btn-info"
+               data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- 댓글 모달창 끝-->
+
 	
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
@@ -155,7 +192,28 @@ function showList(page) {
                    }
                    replyUL.html(str);
                 });
- }
+ }//end of showList
+ 
+	var modal = $(".modal");
+ 	var modalInputReply = modal.find("input[name='reply']");
+ 	var modalInputReplier = modal.find("input[name='replier']");
+ 	var modalInputReplyDate = modal.find("input[name='replyDate']");
+ 	
+ 	var modalModBtn = $("#modalModBtn");
+ 	var modalRemoveBtn = $("#modalRemoveBtn");
+ 	var modalRegisterBtn = $("#modalRegisterBtn");
+ 	
+ 	$("#addReplyBtn").on("click", function(e){
+ 		modal.find("input").val("");
+ 		modalInputReplyDate.closest("div").hide();
+ 		modal.find("button[id != 'modalCloseBtn']").hide();
+ 		
+ 		modalRegisterBtn.show();
+ 		
+ 		$(".modal").modal("show");
+ 	});
+ 	
+ 	
 });
 
 
