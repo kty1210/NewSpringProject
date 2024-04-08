@@ -172,29 +172,76 @@ $(document).ready(function(){
 	
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $(".chat");
+	var pageNum = 1;
+	var replyPageFooter = $(".panel-footer");
+	
 	
 	showList(1);
 	
 function showList(page) {
-    replyService.getList(   {bno : bnoValue, page : page || 1 }, function(list) {
-                   var str = " ";
+    replyService.getList({bno : bnoValue, page : page || 1 }, function(replyCnt, list) {
+                   
+    			   if(page == -1){
+    				   pageNum = Math.ceil(replyCnt/5.0);
+    				   showList(pageNum);
+    				   return
+    			   }
+    	
+    			   var str = "";
+    			   
                    if (list == null  || list.length == 0) {
-                      replyUL.html("");
                       return;
                    }
                    for (var i = 0, len = list.length || 0; i < len; i++) {  
-                      str += "<li class='left clearfix' data-rno= '"+list[i].rno+"'>";
-                      str += " <div>";
-                      str+=  "<div class='header'>";
+                      str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+                      str += " <div><div class='header'>";
                       str+= "<strong class='primary-font'>[" + list[i].rno   + "] " + list[i].replier + "</strong>";
                       str += "<small class='pull-right text-muted'>" + replyService.displayTime(list[i].replyDate)   + "</small></div>";
                       str += "    <p>" + list[i].reply + "</p></div></li>";
                    }
                    replyUL.html(str);
+                   
+                   showREplyPage(replyCnt);
                 });
+    
  }//end of showList
  
- 	
+	function showReplyPage(replyCnt){
+	 var endNum = Math.ceil(pageNum / 5.0) * 5;
+	 var startNum = endNum - 4;
+	 
+	 var prev = startNum != 1;
+	 var next = false;
+	 
+	 if(endNum * 5 >= replyCnt){
+		 endNum = Math.ceil(replyCnt/5.0);
+	 }
+	 
+	 if(endNum * 5 < replyCnt){
+		 next = true;
+	 }
+	 
+	 var str = "<ul class='pagination pull-right'>";
+	 
+	 if(prev){
+		 str+= "<li class='page-item'><a class='page-link' href='" + (starNum-1)+"'>Previous</a></li>";
+	 }
+	 
+	 for(var i = startNum ; i<=endNum; i++){
+		 var active = pageNum == i? "active":"";
+		 str+= "<li calss='page-item '"+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+	 }
+	 
+	 if(next){
+         str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+       }
+       
+      str += "</ul></div>";
+      
+      replyPageFooter.html(str);
+	
+ }
+ 
  
  	//댓글 모달창 관련 선언부
 	var modal = $(".modal");
@@ -207,6 +254,7 @@ function showList(page) {
  	var modalRegisterBtn = $("#modalRegisterBtn");
  	
  	showList(1);
+ 	
  	//댓글 수정
  	modalModBtn.on("click", function(e){
 		var reply = {rno:modal.data("rno"), reply: modalInputReply.val(), replier: modalInputReplier.val()};
@@ -253,7 +301,7 @@ function showList(page) {
  			modal.find("input").val("");
  			modal.modal("hide");
  			
- 			showList(1);
+ 			showList(-1);
  		});
  	});
  	
