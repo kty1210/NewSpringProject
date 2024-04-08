@@ -216,7 +216,7 @@ function showList(page) {
  		$(".modal").modal("show");
  	});
  	
- 	//댓글 등록 처리
+ 	//댓글 등록 처리 & 자동 갱신
  	modalRegisterBtn.on("click", function(e){
  		var reply = {
  				reply: modalInputReply.val(),
@@ -233,6 +233,25 @@ function showList(page) {
  		});
  	});
  	
+ 	//이벤트 처리
+ 	$(".chat").on("click", "li", function(e){
+ 		var rno = $(this).data("rno");
+ 		
+ 		replyService.get(rno, function(reply){
+ 			modalInputReply.val(reply.reply);
+ 			modalInputReplier.val(reply.replier);
+ 			modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
+ 			.attr("readonly", "readonly");
+ 			modal.data("rno", reply.rno);
+ 			
+ 			modal.find("button[id != 'modalCloseBtn']").hide();
+ 			modalModBtn.show();
+ 			modalRemoveBtn.show();
+ 			
+ 			$(".modal").modal("show");
+ 			
+ 		});
+ 	});
  	
  	
  	
@@ -256,14 +275,14 @@ function showList(page) {
 	{reply:"JS TEST", replier:"tester", bno:bnoValue},
 	function(result){
 		alert("RESULT: " + result);
-	}
+	});
 	replyService.getList({bno:bnoValue, page:1}, function(list){
 		for(var i=0, len=list.length || 0; i<len; i++){
 		console.log(list[i] + " : " + i );
 		}
 		});
-		}
-	);		
+		
+		
 	
 	
 </script>
