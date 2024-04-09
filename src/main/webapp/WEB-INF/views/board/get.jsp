@@ -4,7 +4,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board Read</h1>
@@ -117,8 +116,6 @@
 		<!-- ./ end row -->
 	</div>
 
-</div>
-<!-- /#wrapper -->
 
 
 <!-- Modal -->
@@ -246,6 +243,11 @@ $(document).ready(function(){
 		pageNum = targetPageNum;
 		
 		showList(pageNum);
+		
+		// 모든 페이지 버튼의 active 클래스 제거
+        replyPageFooter.find("li").removeClass("active");
+        // 현재 클릭된 페이지 버튼에 active 클래스 추가
+        $(this).parent().addClass("active");
 	});
 
 
@@ -331,6 +333,17 @@ $(document).ready(function(){
 
 		});
 	});
+	/* 
+	replyService.add(
+			{reply:"JS TEST", replier:"tester", bno:bnoValue},
+			function(result){
+				alert("RESULT: " + result);
+			});
+			replyService.getList({bno:bnoValue, page:1}, function(list){
+				for(var i=0, len=list.length || 0; i<len; i++){
+					console.log(list[i] + " : " + i );
+				}
+			}); */
 
 });
 
@@ -348,16 +361,7 @@ $(document).ready(function(){
 			operForm.attr("action", "/board/modify").submit();
 		});
 	})
-	replyService.add(
-	{reply:"JS TEST", replier:"tester", bno:bnoValue},
-	function(result){
-		alert("RESULT: " + result);
-	});
-	replyService.getList({bno:bnoValue, page:1}, function(list){
-		for(var i=0, len=list.length || 0; i<len; i++){
-			console.log(list[i] + " : " + i );
-		}
-	});
+	
 </script>
 
 <%@include file="../includes/footer.jsp"%>

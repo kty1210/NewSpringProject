@@ -6,7 +6,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board Register</h1>
@@ -44,8 +43,6 @@
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
-</div>
-<!-- /#wrapper -->
 
 <script>
 	window.onpageshow = function(event) {

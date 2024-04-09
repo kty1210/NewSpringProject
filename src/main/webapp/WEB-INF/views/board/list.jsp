@@ -6,7 +6,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
 		
@@ -105,7 +104,7 @@
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
 									<!-- page-item active 원래 이런 포맷 -->
-								<li class="page-item ${pageMaker.cri.pageNum == num ? "active" : ""}">
+								<li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
 								<a class="page-link" href="${num}">${num}</a></li>
 							</c:forEach>
 							<c:if test="${pageMaker.next}">
@@ -156,8 +155,6 @@
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
-</div>
-<!-- /#wrapper -->
 <script>
 	$(document).ready(
 			function() {
@@ -169,7 +166,7 @@
 				history.replaceState({}, null, null)
 
 				function checkModal(result) {
-					if (result === '' || history.styate) {
+					if (result === '' || history.state) {
 						return;
 					}
 
