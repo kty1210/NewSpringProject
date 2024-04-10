@@ -3,6 +3,7 @@ package org.zerock.domain;
 import lombok.Getter;
 import lombok.ToString;
 
+// 페이징 처리 위한 클래스
 @Getter
 @ToString
 public class PageDTO {

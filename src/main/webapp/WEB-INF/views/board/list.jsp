@@ -96,17 +96,20 @@
 
 					<div class="pull-right">
 						<ul class="pagination">
+							<!--  boolean값 에 따라 pagination prev 버튼 생성 -->
 							<c:if test="${pageMaker.prev}">
 								<li class="paginate_button previous">
 									<a href="${pageMaker.startPage-1}">Previous</a>
 								</li>
 							</c:if>
+							<!-- forEach 구문을 통해 li 버튼 숫자만큼 생성 -->
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
 									<!-- page-item active 원래 이런 포맷 -->
 								 <li class="paginate_button  ${pageMaker.cri.pageNum == num ? 'active':''} ">
 						   		 <a  href="${num }">${num }</a></li>
 							</c:forEach>
+							<!--  boolean값 에 따라 pagination next 버튼 생성 -->
 							<c:if test="${pageMaker.next}">
 								<li class="paginate_button next">
 									<a  href="${pageMaker.endPage+1}">Next</a>

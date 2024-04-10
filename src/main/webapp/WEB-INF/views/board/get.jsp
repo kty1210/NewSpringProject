@@ -4,6 +4,7 @@
 
 <%@include file="../includes/header.jsp"%>
 
+
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board Read</h1>
@@ -155,100 +156,97 @@
 
 <script>
 $(document).ready(function(){
+    console.log("JS TEST");
 
-	console.log("=============================");
-	console.log("JS TEST");
+    var bnoValue = '<c:out value="${board.bno}"/>';
+    var replyUL = $(".chat");
+    var pageNum = 1;
+    var replyPageFooter = $(".panel-footer");
 
-	var bnoValue = '<c:out value="${board.bno}"/>';
-	var replyUL = $(".chat");
-	var pageNum = 1;
-	var replyPageFooter = $(".panel-footer");
+    showList(1);
 
+    function showList(page) {
+        replyService.getList({bno : bnoValue, page : page || 1 }, function(replyCnt, list) {
 
-	showList(1);
+            if(page == -1){
+                pageNum = Math.ceil(replyCnt/5.0);
+                showList(pageNum);
+                return;
+            }
 
-	function showList(page) {
-		replyService.getList({bno : bnoValue, page : page || 1 }, function(replyCnt, list) {
+            var str = "";
 
-			if(page == -1){
-				pageNum = Math.ceil(replyCnt/5.0);
-				showList(pageNum);
-				return
-			}
+            if (list == null  || list.length == 0) {
+                return;
+            }
+            for (var i = 0, len = list.length || 0; i < len; i++) {  
+                str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+                str += " <div><div class='header'>";
+                str+= "<strong class='primary-font'>[" + list[i].rno   + "] " + list[i].replier + "</strong>";
+                str += "<small class='pull-right text-muted'>" + replyService.displayTime(list[i].replyDate)   + "</small></div>";
+                str += "    <p>" + list[i].reply + "</p></div></li>";
+            }
+            replyUL.html(str);
 
-			var str = "";
+            showReplyPage(replyCnt);
+        });
 
-			if (list == null  || list.length == 0) {
-				return;
-			}
-			for (var i = 0, len = list.length || 0; i < len; i++) {  
-				str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-				str += " <div><div class='header'>";
-				str+= "<strong class='primary-font'>[" + list[i].rno   + "] " + list[i].replier + "</strong>";
-				str += "<small class='pull-right text-muted'>" + replyService.displayTime(list[i].replyDate)   + "</small></div>";
-				str += "    <p>" + list[i].reply + "</p></div></li>";
-			}
-			replyUL.html(str);
+    }//end of showList
 
-			showReplyPage(replyCnt);
-		});
+    function showReplyPage(replyCnt){
+        var endNum = Math.ceil(pageNum / 5.0) * 5;
+        var startNum = endNum - 4;
 
-	}//end of showList
+        var prev = startNum != 1;
+        var next = false;
 
-	function showReplyPage(replyCnt){
-		var endNum = Math.ceil(pageNum / 5.0) * 5;
-		var startNum = endNum - 4;
+        if(endNum * 5 >= replyCnt){
+            endNum = Math.ceil(replyCnt/5.0);
+        }
 
-		var prev = startNum != 1;
-		var next = false;
+        if(endNum * 5 < replyCnt){
+            next = true;
+        }
 
-		if(endNum * 5 >= replyCnt){
-			endNum = Math.ceil(replyCnt/5.0);
-		}
+        var str = "<ul class='pagination pull-right'>";
 
-		if(endNum * 5 < replyCnt){
-			next = true;
-		}
+        if(prev){
+            str+= "<li class='page-item'><a class='page-link' href='" + (startNum-1)+"'>Previous</a></li>";
+        }
 
-		var str = "<ul class='pagination pull-right'>";
+        for(var i = startNum ; i<=endNum; i++){
+            var active = pageNum == i? "active":"";
+            str+= "<li class='page-item "+active+"'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+        }
 
-		if(prev){
-			str+= "<li class='page-item'><a class='page-link' href='" + (startNum-1)+"'>Previous</a></li>";
-		}
+        if(next){
+            str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+        }
 
-		for(var i = startNum ; i<=endNum; i++){
-			var active = pageNum == i? "active":"";
-			str+= "<li calss='page-item '"+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
-		}
+        str += "</ul></div>";
 
-		if(next){
-			str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
-		}
+        replyPageFooter.html(str);
 
-		str += "</ul></div>";
+    }//end of showReplyPage
 
-		replyPageFooter.html(str);
-
-	}//end of showReplyPage
-	
-	//댓글 클릭시 새로운 댓글 불러오기
-	replyPageFooter.on("click", "li a", function(e){
-		e.preventDefault();
-		console.log("page click");
-		
-		var targetPageNum = $(this).attr("href");
-		
-		console.log("targetPageNum: " + targetPageNum);
-		
-		pageNum = targetPageNum;
-		
-		showList(pageNum);
-		
-		// 모든 페이지 버튼의 active 클래스 제거
-        replyPageFooter.find("li").removeClass("active");
+    //댓글 클릭시 새로운 댓글 불러오기
+    replyPageFooter.on("click", "li.page-item a", function(e){
+        e.preventDefault();
+        console.log("page click");
+        
+        var targetPageNum = $(this).attr("href");
+        
+        console.log("targetPageNum: " + targetPageNum);
+        
+        pageNum = targetPageNum;
+        
+        showList(pageNum);
+        
+        // 모든 페이지 버튼의 active 클래스 제거
+        replyPageFooter.find("li.page-item").removeClass("active");
         // 현재 클릭된 페이지 버튼에 active 클래스 추가
         $(this).parent().addClass("active");
-	});
+    });
 
 
 	//댓글 모달창 관련 선언부
@@ -312,9 +310,10 @@ $(document).ready(function(){
 			showList(-1);
 		});
 	});
-
+	
 	//이벤트 처리
 	$(".chat").on("click", "li", function(e){
+		 
 		var rno = $(this).data("rno");
 
 		replyService.get(rno, function(reply){
