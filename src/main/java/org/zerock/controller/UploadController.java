@@ -35,23 +35,23 @@ public class UploadController {
 	}
 
 	//파일을 확인하기 위한 컨트롤러
-	@PostMapping("/uploadFormAction")
-	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
-
-		for (MultipartFile multipartFile : uploadFile) {
-
-			log.info("---------------------------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Name: " + multipartFile.getSize());
-
-			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
-
-			try {
-				multipartFile.transferTo(saveFile);
-			} catch (Exception e) {
-				log.error(e.getMessage());
+		@PostMapping("/uploadFormAction")
+		public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
+	
+			for (MultipartFile multipartFile : uploadFile) {
+	
+				log.info("---------------------------------------------");
+				log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+				log.info("Upload File Name: " + multipartFile.getSize());
+	
+				File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
+	
+				try {
+					multipartFile.transferTo(saveFile);
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+	
 			}
-
 		}
-	}
 }
