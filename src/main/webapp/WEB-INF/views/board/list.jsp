@@ -97,8 +97,8 @@
 					<div class="pull-right">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
-								<li class="page-item">
-									<a class="paginate_button previous" href="${pageMaker.startPage-1}">Previous</a>
+								<li class="paginate_button previous">
+									<a href="${pageMaker.startPage-1}">Previous</a>
 								</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}"
