@@ -98,18 +98,18 @@
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
 								<li class="page-item">
-									<a class="page-link" href="${pageMaker.startPage-1}" tabindex="-1">Previous</a>
+									<a class="paginate_button previous" href="${pageMaker.startPage-1}">Previous</a>
 								</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}" var="num">
 									<!-- page-item active 원래 이런 포맷 -->
-								<li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-								<a class="page-link" href="${num}">${num}</a></li>
+								 <li class="paginate_button  ${pageMaker.cri.pageNum == num ? 'active':''} ">
+						   		 <a  href="${num }">${num }</a></li>
 							</c:forEach>
 							<c:if test="${pageMaker.next}">
-								<li class="page-item">
-									<a class="page-link" href="${pageMaker.startPage+1}" tabindex="-1">Next</a>
+								<li class="paginate_button next">
+									<a  href="${pageMaker.endPage+1}">Next</a>
 								</li>
 							</c:if>
 						</ul>
@@ -159,11 +159,11 @@
 	$(document).ready(
 			function() {
 
-				let result = "<c:out value='${result}'/>";
+				var result = "<c:out value='${result}'/>";
 
 				checkModal(result);
 
-				history.replaceState({}, null, null)
+				history.replaceState({}, null, null);
 
 				function checkModal(result) {
 					if (result === '' || history.state) {
@@ -172,7 +172,7 @@
 
 					if (parseInt(result) > 0) {
 						$(".modal-body").html(
-								"게시글" + parseInt(result) + " 빈이 등록되었습니다.");
+								"게시글" + parseInt(result) + " 번이 등록되었습니다.");
 					}
 
 					$("#myModal").modal("show");
@@ -186,7 +186,7 @@
 	
 	var actionForm = $("#actionForm");
 	
-	$(".page-link").on("click", function(e){
+	$(".paginate_button a").on("click", function(e){
 		
 		e.preventDefault();
 		
