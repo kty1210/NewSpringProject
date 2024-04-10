@@ -88,6 +88,8 @@
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		var maxSize = 5242880;
 
+		function showUpload
+		
 		function checkExtension(fileName, fileSize){
 			if(fileSize >= maxSize){
 				alert("파일 사이즈 초과");
@@ -99,10 +101,48 @@
 			} return true;
 		}
 		
+		
+		 function showUploadResult(uploadResultArr){
+
+			 if(!uploadResultArr || uploadResultArr.length == 0){return;}
+			 var uploadUL = $(".uploadResult ul");
+             var str = "";
+             $(uploadResultArr).each(
+                     function (i, obj){
+                     
+                    	 if (obj.image) {
+                    		  var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+
+                    		  str += "<li><div>";
+                    		  str += "<span>" + obj.fileName + "</span>";
+                    		  str += "<button type='button' class='btn btn-danger btn-circle'><i class='fa fa-times'></i></button><br>";
+                    		  str += "<button type='button' class='btn btn-warning btn-circle'><i class='fa fa-pencil'></i></button><br>";
+                    		  str += "<img src='/display?fileName=" + fileCallPath + "'>";
+                    		  str += "</div>";
+
+                    		} else {
+                    		  str += "</li>";
+
+                    		  var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+                    		  var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+
+                    		  str += "<li><div>";
+                    		  str += "<span>" + obj.fileName + "</span>";
+                    		  str += "<button type='button' class='btn btn-danger btn-circle'><i class='fa fa-times'></i></button><br>";
+                    		  str += "<button type='button' class='btn btn-warning btn-circle'><i class='fa fa-pencil'></i></button><br>";
+                    		  str += "<a href='" + fileLink + "'><img src='/resources/img/attach.png'></a>";
+                    		  str += "</div>";
+
+                    		  str += "</li>";
+                    		}
+                 });
+                 uploadUL.append(str);
+         }
+		
 		$("button[type='submit']").on("click", function(e){
 			e.preventDefault();
 			console.log("submit clicked");
-		})
+		});
 		
 		$("input[type='file']").change(function(e){
 			var formData = new FormData();
@@ -126,6 +166,7 @@
                  success: function (result){
                     
                      console.log(result);
+                     showUploadResult(result);
                      
                  }
              }); //$.ajax
