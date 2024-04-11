@@ -64,7 +64,7 @@
             //json데이터 받아서 해당 파일의 이름 추가
             function showUploadedFile(uploadResultArr){
 
-                let str = "";
+                var str = "";
                 $(uploadResultArr).each(
                         function (i, obj){
                         
@@ -75,7 +75,6 @@
                                 str += "<li><img src='/resources/img/icon.png'>"
                                     + obj.fileName +"</li>";
                                     
-                                    console.log("aaaaaaaa..............")
                             }else{
                             	
                             	console.log("testtest..............")
