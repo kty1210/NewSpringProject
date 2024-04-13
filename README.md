@@ -89,7 +89,20 @@ AJAX를 이용한 비동기 방식의 댓글 구현
 <br/>
 <br/>
 
-## :clock3: 엔티티 관계도
+
+## :clock3: 클래스 다이어그램
+
+![classdiagram](https://github.com/kty1210/NewSpringProject/assets/154123644/289a844b-cee0-4510-95e5-2d72ac3a6016)
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+## :clock4: 엔티티 관계도
 
 ![image](https://github.com/kty1210/NewSpringProject/assets/154123644/dcdfbc1f-8902-4397-9278-f980cf541ee3)
 
@@ -100,7 +113,7 @@ AJAX를 이용한 비동기 방식의 댓글 구현
 <br/>
 <br/>
 
-## :clock4: 기능 시연
+## :clock5: 기능 시연
 
 <br/>
 
