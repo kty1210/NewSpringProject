@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.mapper.BoardAttachMapper;
@@ -23,7 +24,7 @@ public class BoardSeviceImpl implements BoardService {
   
 	// 매퍼 객체 주입
 	@Autowired
-	@Setter
+	@Setter(onMethod_= @Autowired)
 	private BoardMapper mapper;
 	
 	@Autowired
@@ -32,7 +33,7 @@ public class BoardSeviceImpl implements BoardService {
 
 	//등록
 	@Transactional
-  @Override
+	@Override
 	public void register(BoardVO board) {
 		log.info("register ..." + board);
 		
@@ -92,6 +93,12 @@ public class BoardSeviceImpl implements BoardService {
 
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
+	}
+
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno) {
+		
+		return attachMapper.findByBno(bno);
 	}
 
 }

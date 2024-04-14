@@ -1,0 +1,180 @@
+@startuml
+class org.zerock.service.ReplyServiceImpl {
+- ReplyMapper mapper
++ int register(ReplyVO)
++ ReplyVO get(Long)
++ int modify(ReplyVO)
++ int remove(Long)
++ List<ReplyVO> getList(Criteria,Long)
++ ReplyPageDTO getListPage(Criteria,Long)
+}
+
+
+class org.zerock.domain.ReplyVO {
+- Long rno
+- Long bno
+- String reply
+- String replier
+- Date replyDate
+- Date updateDate
+}
+
+class org.zerock.controller.UploadController {
+~ String uploadFolder
+- String getFolder()
++ ResponseEntity<Resource> downloadFile(String)
++ void uploadForm()
++ void uploadFormPost(MultipartFile[],Model)
++ void uploadAjax()
++ ResponseEntity<byte[]> getFile(String)
++ ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[])
+- boolean checkImageType(File)
+}
+
+
+class org.zerock.domain.PageDTO {
+- int startPage
+- int endPage
+- boolean prev
+- int total
+- Criteria cri
++ <<Create>> PageDTO(Criteria,int)
+}
+
+
+interface org.zerock.mapper.TimeMapper {
++ String getTime()
++ String getTime2()
+}
+
+interface org.zerock.service.ReplyService {
++ int register(ReplyVO)
++ ReplyVO get(Long)
++ int modify(ReplyVO)
++ int remove(Long)
++ List<ReplyVO> getList(Criteria,Long)
++ ReplyPageDTO getListPage(Criteria,Long)
+}
+
+class org.zerock.domain.ReplyPageDTO {
+- int replyCnt
+- List<ReplyVO> list
+}
+
+interface org.zerock.mapper.BoardAttachMapper {
++ void insert(BoardAttachVO)
++ void delete(String)
++ List<BoardAttachVO> findByBno(Long)
+}
+
+class org.zerock.service.BoardSeviceImpl {
+- BoardMapper mapper
++ void register(BoardVO)
++ BoardVO get(Long)
++ boolean modify(BoardVO)
++ boolean remove(Long)
++ List<BoardVO> getList(Criteria)
++ int getTotal(Criteria)
+}
+
+
+class org.zerock.domain.AttachFileDTO {
+- String fileName
+- String uploadPath
+- String uuid
+- boolean image
+}
+
+interface org.zerock.mapper.ReplyMapper {
++ int insert(ReplyVO)
++ ReplyVO read(Long)
++ int delete(Long)
++ int update(ReplyVO)
++ List<ReplyVO> getListWithPaging(Criteria,Long)
++ int getCountByBno(Long)
+}
+
+class org.zerock.domain.BoardVO {
+- Long bno
+- String title
+- String content
+- String writer
+- Date regDate
+- Date updateDate
+- int replyCnt
+- List<BoardAttachVO> attachList
+}
+
+interface org.zerock.service.BoardService {
++ void register(BoardVO)
++ BoardVO get(Long)
++ boolean modify(BoardVO)
++ boolean remove(Long)
++ List<BoardVO> getList(Criteria)
++ int getTotal(Criteria)
+}
+
+class org.zerock.controller.ReplyController {
+- ReplyService service
++ ResponseEntity<String> create(ReplyVO)
++ ResponseEntity<ReplyVO> get(Long)
++ ResponseEntity<String> remove(Long)
++ ResponseEntity<String> modify(ReplyVO,Long)
++ ResponseEntity<ReplyPageDTO> getList(int,Long)
+}
+
+
+class org.zerock.domain.BoardAttachVO {
+- String uuid
+- String uploadPath
+- String fileName
+- boolean fileType
+- Long bno
+}
+
+class org.zerock.controller.BoardController {
+- BoardService service
++ void list(Criteria,Model)
++ String register(BoardVO,RedirectAttributes)
++ void get(Long,Criteria,Model)
++ String modify(BoardVO,Criteria,RedirectAttributes)
++ String remove(Long,Criteria,RedirectAttributes)
++ void register()
+}
+
+
+class org.zerock.controller.HomeController {
+- {static} Logger logger
++ String home(Locale,Model)
+}
+
+
+interface org.zerock.mapper.BoardMapper {
++ List<BoardVO> getList()
++ List<BoardVO> getListWithPaging(Criteria)
++ void insert(BoardVO)
++ void insertSelectKey(BoardVO)
++ BoardVO read(Long)
++ int delete(Long)
++ int update(BoardVO)
++ int getTotalCount(Criteria)
++ List<ReplyVO> getListWithPaging(Criteria,Long)
++ int getCountByBno(Long)
+}
+
+class org.zerock.domain.Criteria {
+- int pageNum
+- int amount
+- String type
+- String keyword
++ <<Create>> Criteria()
++ <<Create>> Criteria(int,int)
++ String[] getTypeArr()
+}
+
+
+
+
+org.zerock.service.ReplyService <|.. org.zerock.service.ReplyServiceImpl
+org.zerock.service.BoardService <|.. org.zerock.service.BoardSeviceImpl
+@enduml
