@@ -165,6 +165,17 @@ $(document).ready(function(){
 
     showList(1);
 
+    
+    /* 게시물의 댓글을 가져오는 부분이 자동으로 동작하게 처리 */
+    (function(){
+    	
+    	var bno = '<c:out value="${board.bno}"/>';
+    	$.getJSON("/board/getAttachList", {bno: bno}, function(arr){
+    		console.log(arr);
+    	});
+    })();
+    
+    
     function showList(page) {
         replyService.getList({bno : bnoValue, page : page || 1 }, function(replyCnt, list) {
 

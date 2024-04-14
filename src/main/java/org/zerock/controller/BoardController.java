@@ -1,6 +1,11 @@
 package org.zerock.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
@@ -112,6 +119,20 @@ public class BoardController {
  @GetMapping("register")
  public void register() {
    
+ }
+ 
+ 
+ //화면처리
+ //게시물 번호로 첨부파일 데이터 JSON 반환
+ @GetMapping(value = "/getAttachList", 
+		 produces = MediaType.APPLICATION_JSON_VALUE) // 생성 JSON 형식
+ @ResponseBody //return 값 문자열 처리
+ public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){
+	 
+	 log.info("getAttachList " + bno);
+	 
+	 //ResponseEntity Http 상태 보내기 위해 사용
+	 return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
  }
  
 }
