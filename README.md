@@ -157,7 +157,8 @@ AJAX를 이용한 비동기 방식의 댓글 구현
 
 
 <br/> ✦ 상세 페이지 <br/>
-![image](https://github.com/kty1210/NewSpringProject/assets/154123644/92bb3eb1-f1ad-44de-a638-ce819e6ed78f)
+![image](https://github.com/kty1210/NewSpringProject/assets/154123644/6fe180e4-d119-44e9-8242-9076f41ced7b)
+
 
 <br/>
 <br/>
