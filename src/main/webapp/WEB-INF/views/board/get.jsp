@@ -5,6 +5,50 @@
 <%@include file="../includes/header.jsp"%>
 
 
+
+<style>
+	.uploadResult {
+		width: 100%;
+		background-color: gray;
+	}
+	
+	/* 이미지 목록을 가로로 나열하는 스타일 */
+	.uploadResult ul {
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	/* 이미지 아이템에 적용되는 스타일 */
+	.uploadResult ul li {
+		list-style: none;
+		padding: 10px;
+		align-content: center;
+		text-align: center;
+	}
+	
+	/* 이미지 스타일 */
+	.uploadResult ul li img {
+		width: 100px;
+	}
+	
+	/* 텍스트 스타일 */
+	.uploadResult ul li span {
+		color: white;
+	}
+	
+	/* 큰 이미지를 감싸는 부모 요소 스타일 */
+	.bigPictureWrapper {
+		position: absolute;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		top: 0%;
+		width: 100%;
+	}
+</style>
+
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board Read</h1>
@@ -13,6 +57,7 @@
 	</div>
 	<!-- /.row -->
 	<div class="row">
+		
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">Board Read Paging</div>
@@ -74,6 +119,37 @@
 					</script>
 
 
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	
+	
+	
+	<!-- 첨부파일 -->
+	<div class ='bigPictureWrapper'>
+		<div class = 'bigPicture'>
+		</div>
+	</div>
+	
+	<!-- /.row -->
+	<div class="row">
+		
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Files</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+				
+					<div class='uploadResult'>
+						<ul>
+						</ul>
+					</div>
+				
 				</div>
 				<!-- /.panel-body -->
 			</div>
@@ -166,14 +242,7 @@ $(document).ready(function(){
     showList(1);
 
     
-    /* 게시물의 댓글을 가져오는 부분이 자동으로 동작하게 처리 */
-    (function(){
-    	
-    	var bno = '<c:out value="${board.bno}"/>';
-    	$.getJSON("/board/getAttachList", {bno: bno}, function(arr){
-    		console.log(arr);
-    	});
-    })();
+    
     
     
     function showList(page) {
@@ -203,7 +272,42 @@ $(document).ready(function(){
         });
 
     }//end of showList
-
+    
+    /* 게시물의 댓글을 가져오는 부분이 자동으로 동작하게 처리 */
+    (function(){
+    	
+    	var bno = '<c:out value="${board.bno}"/>';
+    	
+    	//첨부파일 Json처리
+    	$.getJSON("/board/getAttachList", {bno: bno}, function(arr) {
+    		
+    		console.log(arr);
+    		
+    		var str = "";
+    		
+    		$(arr).each(function(i, attach) {
+    			//image type
+    			if(attach.fileType) {
+    				var fileCallPath = encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+    				str += "<li data-path='"+attach.uploadPath+"'data-uuid='"+attach.uuid+"'data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>";
+    				str += "<img src='/display?fileName="+fileCallPath+"'>"; 
+    				str += "</div>";
+    				str +="</li>";
+    			} else {
+    				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>";
+    				str += "<span> "+attach.fileName+"</span><br/>"; 
+    				str += "<img src='/resources/img/icon.jpg'>"; 
+    				str += "</div>";
+    				str +="</li>";
+    			}
+    		});
+    		
+    		$(".uploadResult ul").html(str);
+    		
+    	});//end getjson
+    })();
+    
+	//댓글 페이지
     function showReplyPage(replyCnt){
         var endNum = Math.ceil(pageNum / 5.0) * 5;
         var startNum = endNum - 4;
@@ -355,6 +459,8 @@ $(document).ready(function(){
 				}
 			}); */
 
+			
+			
 });
 
 
@@ -370,6 +476,7 @@ $(document).ready(function(){
 		$("button[data-oper='modify']").on("click", function(e){
 			operForm.attr("action", "/board/modify").submit();
 		});
+		
 	})
 	
 </script>
